@@ -1,0 +1,1308 @@
+<!doctype html>
+
+<html lang="id">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+>
+
+<title>
+Basketball Remote
+</title>
+
+<style>
+
+:root{
+
+  --bg:#080a0c;
+  --card:#111519;
+  --line:#2a3036;
+
+  --text:#f5f6f7;
+  --muted:#899198;
+
+  --red:#ff2841;
+  --green:#27e978;
+  --blue:#2385d0;
+  --amber:#f5b52a;
+}
+
+*{
+
+  box-sizing:border-box;
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+body{
+
+  margin:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #111519,
+      #07090b 35%,
+      #050607
+    );
+
+  color:var(--text);
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  padding:10px;
+
+  touch-action:manipulation;
+}
+
+.app{
+
+  width:min(
+    720px,
+    100%
+  );
+
+  margin:auto;
+}
+
+
+/* HEADER */
+
+.header{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:10;
+
+  background:#0d1013ee;
+
+  backdrop-filter:
+    blur(12px);
+
+  border:
+    1px solid
+    #30363b;
+
+  border-radius:14px;
+
+  padding:12px;
+
+  margin-bottom:9px;
+
+  box-shadow:
+    0 8px 30px #000;
+}
+
+.title{
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:center;
+}
+
+.title h1{
+
+  font-size:17px;
+
+  margin:0;
+
+  font-weight:950;
+}
+
+.status{
+
+  font-size:10px;
+
+  color:#ff6976;
+
+  font-weight:900;
+}
+
+.status.on{
+
+  color:var(--green);
+}
+
+
+/* LIVE */
+
+.live{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap:6px;
+
+  margin-top:9px;
+}
+
+.livebox{
+
+  background:#060809;
+
+  border:
+    1px solid
+    #242a2e;
+
+  border-radius:8px;
+
+  text-align:center;
+
+  padding:7px;
+}
+
+.livebox small{
+
+  display:block;
+
+  color:#707980;
+
+  font-size:8px;
+
+  font-weight:900;
+
+  letter-spacing:.12em;
+}
+
+.livebox b{
+
+  font:
+    900 23px
+    "Courier New",
+    monospace;
+}
+
+
+/* GRID */
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:8px;
+}
+
+.card{
+
+  background:var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:12px;
+
+  padding:10px;
+
+  box-shadow:
+    0 6px 20px #0005;
+}
+
+.card.full{
+
+  grid-column:
+    1/-1;
+}
+
+h2{
+
+  font-size:10px;
+
+  color:#aeb5ba;
+
+  letter-spacing:.13em;
+
+  margin:
+    0 0 8px;
+
+  font-weight:950;
+}
+
+
+/* TEAM NAME */
+
+.name-input{
+
+  width:100%;
+
+  min-height:50px;
+
+  padding:
+    0 12px;
+
+  margin-bottom:7px;
+
+  border:
+    1px solid
+    #3b444b;
+
+  border-radius:8px;
+
+  background:#080a0c;
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:900;
+
+  outline:none;
+
+  text-align:center;
+}
+
+.name-input:focus{
+
+  border-color:
+    var(--blue);
+}
+
+.name-btn{
+
+  min-height:50px;
+
+  background:#102033;
+
+  border-color:#255e8a;
+
+  margin-bottom:7px;
+}
+
+
+/* ROW */
+
+.row{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:6px;
+
+  margin-bottom:6px;
+}
+
+
+/* BUTTON */
+
+button{
+
+  width:100%;
+
+  min-height:48px;
+
+  border:
+    1px solid
+    #3b444b;
+
+  border-radius:8px;
+
+  background:#1a2025;
+
+  color:#fff;
+
+  font-weight:950;
+
+  font-size:14px;
+
+  cursor:pointer;
+
+  box-shadow:
+    inset 0 1px #ffffff0a;
+}
+
+button:active{
+
+  transform:
+    scale(.96);
+
+  filter:
+    brightness(1.18);
+}
+
+.scorebtn{
+
+  font-size:17px;
+
+  min-height:60px;
+}
+
+.red{
+
+  border-color:#7d2935;
+
+  background:#291317;
+}
+
+.green{
+
+  border-color:#19754d;
+
+  background:#10261d;
+}
+
+.blue{
+
+  border-color:#255e8a;
+
+  background:#102033;
+}
+
+.amber{
+
+  border-color:#7d6120;
+
+  background:#29210d;
+}
+
+.dark{
+
+  background:#111519;
+}
+
+.fullbtn{
+
+  margin-bottom:6px;
+}
+
+.label{
+
+  text-align:center;
+
+  color:#697177;
+
+  font-size:9px;
+
+  font-weight:900;
+
+  margin:
+    7px 0 5px;
+
+  letter-spacing:.1em;
+}
+
+.danger{
+
+  background:#351219;
+
+  border-color:#9a3040;
+}
+
+
+/* BIG PERIOD / SHOT */
+
+.big-control button{
+
+  min-height:65px;
+
+  font-size:19px;
+}
+
+.big-control .value{
+
+  font:
+    900 28px
+    "Courier New",
+    monospace;
+
+  color:var(--green);
+}
+
+
+/* MOBILE */
+
+@media(max-width:520px){
+
+  body{
+
+    padding:7px;
+  }
+
+  .grid{
+
+    gap:6px;
+  }
+
+  .card{
+
+    padding:8px;
+
+    border-radius:10px;
+  }
+
+  button{
+
+    min-height:46px;
+
+    font-size:13px;
+  }
+
+  .scorebtn{
+
+    min-height:54px;
+
+    font-size:16px;
+  }
+
+  .livebox b{
+
+    font-size:21px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+<!-- ======================
+     HEADER
+======================= -->
+
+<header class="header">
+
+  <div class="title">
+
+    <h1>
+      🏀 BASKETBALL REMOTE
+    </h1>
+
+    <div
+      id="status"
+      class="status">
+      MENGHUBUNGKAN...
+    </div>
+
+  </div>
+
+
+  <div class="live">
+
+    <div class="livebox">
+
+      <small>
+        HOME
+      </small>
+
+      <b id="ph">
+        00
+      </b>
+
+    </div>
+
+
+    <div class="livebox">
+
+      <small>
+        GAME CLOCK
+      </small>
+
+      <b id="pc">
+        10:00
+      </b>
+
+    </div>
+
+
+    <div class="livebox">
+
+      <small>
+        GUEST
+      </small>
+
+      <b id="pg">
+        00
+      </b>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<div class="grid">
+
+
+<!-- ======================
+     NAMA TIM
+======================= -->
+
+<section class="card full">
+
+  <h2>
+    TEAM NAME
+  </h2>
+
+
+  <input
+    id="homeName"
+    class="name-input"
+    type="text"
+    placeholder="Nama Home"
+    maxlength="20"
+  >
+
+
+  <button
+    class="name-btn"
+    onclick="updateHomeName()">
+
+    UPDATE HOME
+
+  </button>
+
+
+  <input
+    id="guestName"
+    class="name-input"
+    type="text"
+    placeholder="Nama Guest"
+    maxlength="20"
+  >
+
+
+  <button
+    class="name-btn"
+    onclick="updateGuestName()">
+
+    UPDATE GUEST
+
+  </button>
+
+</section>
+
+
+<!-- ======================
+     GAME CLOCK
+======================= -->
+
+<section class="card full">
+
+  <h2>
+    GAME CLOCK
+  </h2>
+
+
+  <button
+    id="gameBtn"
+    class="blue fullbtn">
+
+    ▶ START
+
+  </button>
+
+
+  <div class="row">
+
+    <button
+      onclick="send({
+        type:'gameAdd',
+        amount:60
+      })">
+
+      +1:00
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'gameAdd',
+        amount:10
+      })">
+
+      +0:10
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'gameAdd',
+        amount:-10
+      })">
+
+      −0:10
+
+    </button>
+
+  </div>
+
+
+  <button
+    class="red fullbtn"
+    onclick="send({
+      type:'gameSet',
+      value:600
+    })">
+
+    RESET 10:00
+
+  </button>
+
+</section>
+
+
+<!-- ======================
+     HOME SCORE
+======================= -->
+
+<section class="card">
+
+  <h2>
+    HOME SCORE
+  </h2>
+
+
+  <div class="row">
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'home',
+        amount:1
+      })">
+
+      +1
+
+    </button>
+
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'home',
+        amount:2
+      })">
+
+      +2
+
+    </button>
+
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'home',
+        amount:3
+      })">
+
+      +3
+
+    </button>
+
+  </div>
+
+
+  <button
+    class="red fullbtn"
+    onclick="send({
+      type:'score',
+      team:'home',
+      amount:-1
+    })">
+
+    −1
+
+  </button>
+
+</section>
+
+
+<!-- ======================
+     GUEST SCORE
+======================= -->
+
+<section class="card">
+
+  <h2>
+    GUEST SCORE
+  </h2>
+
+
+  <div class="row">
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'guest',
+        amount:1
+      })">
+
+      +1
+
+    </button>
+
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'guest',
+        amount:2
+      })">
+
+      +2
+
+    </button>
+
+
+    <button
+      class="scorebtn"
+      onclick="send({
+        type:'score',
+        team:'guest',
+        amount:3
+      })">
+
+      +3
+
+    </button>
+
+  </div>
+
+
+  <button
+    class="red fullbtn"
+    onclick="send({
+      type:'score',
+      team:'guest',
+      amount:-1
+    })">
+
+    −1
+
+  </button>
+
+</section>
+
+
+<!-- ======================
+     SHOT CLOCK
+======================= -->
+
+<section class="card">
+
+  <h2>
+    SHOT CLOCK
+  </h2>
+
+
+  <div class="row">
+
+    <button
+      class="green"
+      onclick="send({
+        type:'shotSet',
+        value:24
+      })">
+
+      24
+
+    </button>
+
+
+    <button
+      class="green"
+      onclick="send({
+        type:'shotSet',
+        value:14
+      })">
+
+      14
+
+    </button>
+
+
+    <button
+      class="danger"
+      onclick="send({
+        type:'shotSet',
+        value:0
+      })">
+
+      00
+
+    </button>
+
+  </div>
+
+
+  <button
+    id="shotBtn"
+    class="green fullbtn">
+
+    ▶ START SHOT
+
+  </button>
+
+
+  <div class="row">
+
+    <button
+      onclick="send({
+        type:'shotAdd',
+        amount:1
+      })">
+
+      +1
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'shotAdd',
+        amount:-1
+      })">
+
+      −1
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'shotSet',
+        value:24
+      })">
+
+      RESET
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ======================
+     PERIOD
+======================= -->
+
+<section class="card">
+
+  <h2>
+    PERIOD
+  </h2>
+
+
+  <div class="row big-control">
+
+    <button
+      onclick="send({
+        type:'period',
+        amount:-1
+      })">
+
+      −
+
+    </button>
+
+
+    <button class="green value">
+
+      1
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'period',
+        amount:1
+      })">
+
+      +
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ======================
+     POSSESSION & BONUS
+======================= -->
+
+<section class="card full">
+
+  <h2>
+    POSSESSION & BONUS
+  </h2>
+
+
+  <div class="row">
+
+    <button
+      class="blue"
+      onclick="send({
+        type:'poss',
+        team:'home'
+      })">
+
+      HOME POSS
+
+    </button>
+
+
+    <button
+      class="blue"
+      onclick="send({
+        type:'poss',
+        team:'guest'
+      })">
+
+      GUEST POSS
+
+    </button>
+
+
+    <button
+      class="green"
+      onclick="send({
+        type:'bonus',
+        team:'home',
+        value:true
+      })">
+
+      H BONUS
+
+    </button>
+
+  </div>
+
+
+  <div class="row">
+
+    <button
+      onclick="send({
+        type:'bonus',
+        team:'home',
+        value:false
+      })">
+
+      H NO
+
+    </button>
+
+
+    <button
+      class="green"
+      onclick="send({
+        type:'bonus',
+        team:'guest',
+        value:true
+      })">
+
+      G BONUS
+
+    </button>
+
+
+    <button
+      onclick="send({
+        type:'bonus',
+        team:'guest',
+        value:false
+      })">
+
+      G NO
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ======================
+     MASTER
+======================= -->
+
+<section class="card full">
+
+  <h2>
+    MASTER
+  </h2>
+
+
+  <button
+    class="amber fullbtn"
+    onclick="send({
+      type:'reset'
+    })">
+
+    ↻ RESET SCOREBOARD
+
+  </button>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+let ws;
+
+
+const $ =
+  id =>
+    document.getElementById(id);
+
+
+const pad =
+  n =>
+    String(
+      Math.max(0,n)
+    ).padStart(2,"0");
+
+
+/* ======================
+   CONNECT
+======================= */
+
+function connect(){
+
+  const proto =
+    location.protocol === "https:"
+      ? "wss"
+      : "ws";
+
+
+  ws = new WebSocket(
+  proto + "://" + location.host + "/api/ws"
+  );
+
+
+  ws.onopen = () => {
+
+    $("status").textContent =
+      "● ONLINE";
+
+    $("status").className =
+      "status on";
+
+  };
+
+
+  ws.onclose = () => {
+
+    $("status").textContent =
+      "● OFFLINE";
+
+    $("status").className =
+      "status";
+
+    setTimeout(
+      connect,
+      1500
+    );
+
+  };
+
+
+  ws.onmessage = e => {
+
+    const m =
+      JSON.parse(e.data);
+
+    if(
+      m.type === "state"
+    ){
+
+      render(m.state);
+
+    }
+
+  };
+
+}
+
+
+/* ======================
+   SEND
+======================= */
+
+function send(a){
+
+  if(
+    ws &&
+    ws.readyState === 1
+  ){
+
+    ws.send(
+      JSON.stringify(a)
+    );
+
+  }
+
+}
+
+
+/* ======================
+   UPDATE NAMA
+======================= */
+
+function updateHomeName(){
+
+  const value =
+    $("homeName").value.trim();
+
+  if(!value){
+
+    return;
+
+  }
+
+  send({
+
+    type:"teamName",
+
+    team:"home",
+
+    value:value
+
+  });
+
+}
+
+
+function updateGuestName(){
+
+  const value =
+    $("guestName").value.trim();
+
+  if(!value){
+
+    return;
+
+  }
+
+  send({
+
+    type:"teamName",
+
+    team:"guest",
+
+    value:value
+
+  });
+
+}
+
+
+/* ======================
+   RENDER
+======================= */
+
+function render(s){
+
+  $("ph").textContent =
+    pad(s.home);
+
+  $("pg").textContent =
+    pad(s.guest);
+
+
+  const m =
+    Math.floor(
+      s.game / 60
+    );
+
+  const sec =
+    s.game % 60;
+
+
+  $("pc").textContent =
+    pad(m) +
+    ":" +
+    pad(sec);
+
+
+  $("gameBtn").textContent =
+    s.gameRun
+      ? "⏸ PAUSE"
+      : "▶ START";
+
+
+  $("shotBtn").textContent =
+    s.shotRun
+      ? "⏸ PAUSE SHOT"
+      : "▶ START SHOT";
+
+
+  /*
+   * Masukkan nama yang
+   * sekarang tersimpan di server
+   * ke input HP
+   */
+
+  $("homeName").value =
+    s.homeName;
+
+  $("guestName").value =
+    s.guestName;
+
+}
+
+
+/* ======================
+   BUTTON EVENTS
+======================= */
+
+$("gameBtn").onclick =
+  () =>
+    send({
+      type:"gameToggle"
+    });
+
+
+$("shotBtn").onclick =
+  () =>
+    send({
+      type:"shotToggle"
+    });
+
+
+connect();
+
+</script>
+
+</body>
+
+</html>

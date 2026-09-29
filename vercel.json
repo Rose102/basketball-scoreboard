@@ -1,0 +1,13 @@
+{
+  "name": "basketball-scoreboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node api/ws.js"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.35.3",
+    "express": "^5.1.0",
+    "ws": "^8.18.3"
+  }
+}

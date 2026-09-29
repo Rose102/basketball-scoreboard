@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>Basketball Scoreboard</title>
+
+<style>
+
+:root{
+  --bg:#050607;
+  --panel:#0b0e10;
+  --line:#252a2e;
+  --muted:#70777d;
+
+  --red:#ff263d;
+  --amber:#ffb000;
+  --green:#29ef77;
+
+  --white:#f2f4f5;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+
+  margin:0;
+
+  width:100%;
+  height:100%;
+
+  overflow:hidden;
+
+  background:#000;
+
+  color:var(--white);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+body{
+
+  padding:1vh 1vw;
+
+  background:
+    radial-gradient(
+      ellipse at 50% -20%,
+      #202326 0,
+      #090a0b 42%,
+      #000 78%
+    );
+}
+
+
+/* =========================
+   SCOREBOARD
+========================= */
+
+.scoreboard{
+
+  width:100%;
+  height:100%;
+
+  display:grid;
+
+  grid-template-rows:
+    auto
+    1fr
+    auto;
+
+  border:
+    clamp(3px,.45vw,7px)
+    solid
+    #282c2f;
+
+  border-radius:10px;
+
+  background:#060708;
+
+  box-shadow:
+    0 0 0 2px #0d0f10 inset,
+    0 20px 70px #000;
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+.scoreboard:before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:8px;
+
+  border:1px solid #15191c;
+
+  pointer-events:none;
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.top{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1.5fr
+    1fr;
+
+  align-items:center;
+
+  padding:
+    1.5vh
+    2vw
+    1.2vh;
+
+  border-bottom:
+    2px solid
+    var(--line);
+
+  z-index:1;
+}
+
+.top-side{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:1vw;
+}
+
+.top-side.right{
+
+  justify-content:flex-end;
+}
+
+.caption{
+
+  font-size:
+    clamp(12px,1vw,19px);
+
+  font-weight:900;
+
+  letter-spacing:.16em;
+
+  color:#c5c9cc;
+}
+
+
+/* POSSESSION */
+
+.poss{
+
+  width:0;
+  height:0;
+
+  border-top:
+    clamp(10px,1.2vw,21px)
+    solid transparent;
+
+  border-bottom:
+    clamp(10px,1.2vw,21px)
+    solid transparent;
+
+  border-left:
+    clamp(18px,2vw,36px)
+    solid #3a3e41;
+
+  filter:
+    drop-shadow(0 0 2px #000);
+}
+
+.poss.left{
+
+  border-left:0;
+
+  border-right:
+    clamp(18px,2vw,36px)
+    solid #3a3e41;
+}
+
+.poss.on{
+
+  border-left-color:
+    var(--red);
+
+  border-right-color:
+    var(--red);
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      #ff263d99
+    );
+}
+
+
+/* CLOCK */
+
+.clock{
+
+  text-align:center;
+}
+
+.clock-label{
+
+  font-size:
+    clamp(9px,.75vw,14px);
+
+  letter-spacing:.35em;
+
+  color:#777d82;
+
+  font-weight:900;
+
+  margin-bottom:.5vh;
+}
+
+.clock-value{
+
+  font:
+    900
+    clamp(65px,8.5vw,155px)
+    /.8
+    "Courier New",
+    monospace;
+
+  letter-spacing:.04em;
+
+  color:var(--amber);
+
+  text-shadow:
+    0 0 9px #ffb00066,
+    0 0 28px #ffb00022;
+}
+
+.clock-value.danger{
+
+  color:var(--red);
+
+  text-shadow:
+    0 0 9px #ff263d77;
+}
+
+
+/* BONUS */
+
+.bonus-row{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:.7vw;
+
+  margin-top:1vh;
+}
+
+.bonus-row.right{
+
+  justify-content:flex-end;
+}
+
+.bonus{
+
+  width:
+    clamp(16px,1.7vw,30px);
+
+  height:
+    clamp(16px,1.7vw,30px);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 28%,
+      #ffe993,
+      #ff9f00 45%,
+      #713000
+    );
+
+  box-shadow:
+    0 0 8px #ffad0044;
+
+  border:
+    2px solid
+    #5b4b25;
+}
+
+.bonus.off{
+
+  opacity:.18;
+
+  filter:grayscale(1);
+}
+
+
+/* =========================
+   MAIN SCORE
+========================= */
+
+.main{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    minmax(130px,15vw)
+    1fr;
+
+  gap:2vw;
+
+  align-items:center;
+
+  padding:
+    2vh
+    2vw;
+
+  min-height:0;
+}
+
+.team{
+
+  text-align:center;
+
+  min-width:0;
+}
+
+
+/* TEAM NAME */
+
+.team-name{
+
+  font-size:
+    clamp(28px,4vw,72px);
+
+  font-weight:950;
+
+  letter-spacing:.04em;
+
+  margin-bottom:1.5vh;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+
+/* SCORE WINDOW */
+
+.score-window{
+
+  height:
+    min(52vh,560px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      #0a0c0d,
+      #111416,
+      #080a0b
+    );
+
+  border:
+    2px solid
+    #202428;
+
+  box-shadow:
+    inset 0 0 35px #000,
+    0 0 0 1px #050606;
+}
+
+
+/* SCORE */
+
+.score{
+
+  font:
+    900
+    clamp(120px,18vw,330px)
+    /.7
+    "Courier New",
+    monospace;
+
+  letter-spacing:-.09em;
+
+  color:var(--red);
+
+  text-shadow:
+    0 0 7px #ff262688,
+    0 0 28px #ff263d2a;
+}
+
+
+/* =========================
+   CENTER
+========================= */
+
+.center{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:2vh;
+}
+
+
+/* PERIOD */
+
+.period-box{
+
+  width:100%;
+
+  text-align:center;
+
+  background:#0b110e;
+
+  border:
+    2px solid
+    #1c2b22;
+
+  padding:
+    2vh
+    .5vw;
+
+  box-shadow:
+    inset 0 0 20px #000;
+}
+
+.period-label{
+
+  font-weight:900;
+
+  font-size:
+    clamp(10px,1vw,18px);
+
+  letter-spacing:.16em;
+
+  margin-bottom:.7vh;
+
+  color:#d5d9db;
+}
+
+.period-value{
+
+  color:var(--green);
+
+  font:
+    900
+    clamp(55px,6vw,110px)
+    /.9
+    "Courier New",
+    monospace;
+
+  text-shadow:
+    0 0 15px
+    #29ef7755;
+}
+
+
+/* SHOT CLOCK */
+
+.shot-box{
+
+  width:100%;
+
+  text-align:center;
+
+  background:#0b110e;
+
+  border:
+    2px solid
+    #1c2b22;
+
+  padding:
+    2vh
+    .5vw;
+
+  box-shadow:
+    inset 0 0 20px #000;
+}
+
+.shot-label{
+
+  font-weight:900;
+
+  font-size:
+    clamp(10px,1vw,18px);
+
+  letter-spacing:.16em;
+
+  margin-bottom:.7vh;
+
+  color:#d5d9db;
+}
+
+.shot-value{
+
+  color:var(--green);
+
+  font:
+    900
+    clamp(55px,6vw,110px)
+    /.9
+    "Courier New",
+    monospace;
+
+  text-shadow:
+    0 0 15px
+    #29ef7755;
+}
+
+.shot-value.danger{
+
+  color:var(--red);
+
+  text-shadow:
+    0 0 15px
+    #ff263d77;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.bottom{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    1fr;
+
+  border-top:
+    2px solid
+    var(--line);
+
+  background:#080a0b;
+
+  min-height:6vh;
+}
+
+.bottom-cell{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-right:
+    1px solid
+    #24282b;
+}
+
+.bottom-cell:last-child{
+
+  border:0;
+}
+
+.bottom-cell small{
+
+  font-size:
+    clamp(7px,.6vw,12px);
+
+  letter-spacing:.16em;
+
+  color:#6e757a;
+
+  font-weight:900;
+}
+
+.bottom-cell b{
+
+  font:
+    900
+    clamp(19px,1.8vw,34px)
+    /1.1
+    "Courier New",
+    monospace;
+
+  margin-top:.5vh;
+}
+
+.remote-note{
+
+  color:#343a3f!important;
+}
+
+
+/* =========================
+   ASPECT
+========================= */
+
+@media(max-aspect-ratio:4/3){
+
+  .top{
+
+    grid-template-columns:
+      1fr
+      1.3fr
+      1fr;
+  }
+
+  .main{
+
+    gap:1vw;
+
+    padding:
+      1vh
+      1vw;
+  }
+
+  .team-name{
+
+    font-size:
+      clamp(22px,3vw,48px);
+  }
+
+  .score-window{
+
+    height:
+      min(48vh,450px);
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="scoreboard">
+
+  <!-- =====================
+       TOP
+  ====================== -->
+
+  <section class="top">
+
+    <div>
+
+      <div class="top-side">
+
+        <div
+          id="possHome"
+          class="poss left on">
+        </div>
+
+        <div class="caption">
+          POSS
+        </div>
+
+      </div>
+
+      <div class="bonus-row">
+
+        <div
+          id="bonusHome"
+          class="bonus off">
+        </div>
+
+        <div class="caption">
+          BONUS
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="clock">
+
+      <div class="clock-label">
+        GAME CLOCK
+      </div>
+
+      <div
+        id="clock"
+        class="clock-value">
+        10:00
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <div class="top-side right">
+
+        <div class="caption">
+          POSS
+        </div>
+
+        <div
+          id="possGuest"
+          class="poss">
+        </div>
+
+      </div>
+
+      <div class="bonus-row right">
+
+        <div class="caption">
+          BONUS
+        </div>
+
+        <div
+          id="bonusGuest"
+          class="bonus off">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================
+       MAIN
+  ====================== -->
+
+  <main class="main">
+
+
+    <!-- HOME -->
+
+    <section class="team">
+
+      <div
+        id="homeName"
+        class="team-name">
+        DESPRO
+      </div>
+
+      <div class="score-window">
+
+        <div
+          id="homeScore"
+          class="score">
+          0
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CENTER -->
+
+    <section class="center">
+
+
+      <div class="period-box">
+
+        <div class="period-label">
+          PERIOD
+        </div>
+
+        <div
+          id="period"
+          class="period-value">
+          1
+        </div>
+
+      </div>
+
+
+      <div class="shot-box">
+
+        <div class="shot-label">
+          SHOT CLOCK
+        </div>
+
+        <div
+          id="shot"
+          class="shot-value">
+          24
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- GUEST -->
+
+    <section class="team">
+
+      <div
+        id="guestName"
+        class="team-name">
+        INFORMATIKA
+      </div>
+
+      <div class="score-window">
+
+        <div
+          id="guestScore"
+          class="score">
+          0
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================
+       BOTTOM
+  ====================== -->
+
+  <footer class="bottom">
+
+    <div class="bottom-cell">
+
+      <small>
+        HOME
+      </small>
+
+      <b id="bottomHome">
+        DESPRO
+      </b>
+
+    </div>
+
+
+    <div class="bottom-cell">
+
+      <small>
+        GUEST
+      </small>
+
+      <b id="bottomGuest">
+        INFORMATIKA
+      </b>
+
+    </div>
+
+
+    <div class="bottom-cell">
+
+      <small>
+        PERIOD
+      </small>
+
+      <b id="bottomPeriod">
+        1
+      </b>
+
+    </div>
+
+
+    <div class="bottom-cell">
+
+      <small>
+        STATUS
+      </small>
+
+      <b
+        id="connection"
+        class="remote-note">
+        OFFLINE
+      </b>
+
+    </div>
+
+  </footer>
+
+</div>
+
+
+<script>
+
+let ws;
+
+const $ =
+  id => document.getElementById(id);
+
+const pad =
+  n =>
+    String(
+      Math.max(0, n)
+    ).padStart(2, "0");
+
+
+function connect(){
+
+  const proto =
+    location.protocol === "https:"
+      ? "wss"
+      : "ws";
+
+  ws =
+    new WebSocket(
+      proto +
+      "://" +
+      location.host
+    );
+
+
+  ws.onopen = () => {
+
+    $("connection").textContent =
+      "ONLINE";
+
+    $("connection").style.color =
+      "#29ef77";
+  };
+
+
+  ws.onclose = () => {
+
+    $("connection").textContent =
+      "OFFLINE";
+
+    $("connection").style.color =
+      "";
+
+    setTimeout(
+      connect,
+      1500
+    );
+  };
+
+
+  ws.onmessage = e => {
+
+    const m =
+      JSON.parse(e.data);
+
+    if(
+      m.type === "state"
+    ){
+
+      render(m.state);
+
+    }
+
+  };
+
+}
+
+
+function render(s){
+
+  // SCORE
+
+  $("homeScore").textContent =
+    pad(s.home);
+
+  $("guestScore").textContent =
+    pad(s.guest);
+
+
+  // NAMA TIM
+
+  $("homeName").textContent =
+    s.homeName;
+
+  $("guestName").textContent =
+    s.guestName;
+
+
+  $("bottomHome").textContent =
+    s.homeName;
+
+  $("bottomGuest").textContent =
+    s.guestName;
+
+
+  // PERIOD
+
+  $("period").textContent =
+    s.period;
+
+  $("bottomPeriod").textContent =
+    s.period;
+
+
+  // GAME CLOCK
+
+  const minutes =
+    Math.floor(
+      s.game / 60
+    );
+
+  const seconds =
+    s.game % 60;
+
+  $("clock").textContent =
+    pad(minutes) +
+    ":" +
+    pad(seconds);
+
+
+  $("clock").classList.toggle(
+    "danger",
+    s.game <= 60
+  );
+
+
+  // SHOT CLOCK
+
+  $("shot").textContent =
+    pad(s.shot);
+
+  $("shot").classList.toggle(
+    "danger",
+    s.shot <= 5
+  );
+
+
+  // BONUS
+
+  $("bonusHome").classList.toggle(
+    "off",
+    !s.homeBonus
+  );
+
+  $("bonusGuest").classList.toggle(
+    "off",
+    !s.guestBonus
+  );
+
+
+  // POSSESSION
+
+  $("possHome").classList.toggle(
+    "on",
+    s.poss === "home"
+  );
+
+  $("possGuest").classList.toggle(
+    "on",
+    s.poss === "guest"
+  );
+
+}
+
+
+connect();
+
+</script>
+
+</body>
+
+</html>

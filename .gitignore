@@ -1,0 +1,4 @@
+node_modules/
+*.rar
+.env
+.env.local
