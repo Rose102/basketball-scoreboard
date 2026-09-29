@@ -1,9 +1,23 @@
 {
   "version": 2,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/api/ws"
+      "src": "api/ws.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/ws.js"
+    },
+    {
+      "src": "/controller",
+      "dest": "/public/controller.html"
+    },
+    {
+      "src": "/",
+      "dest": "/public/scoreboard.html"
     }
   ]
 }
