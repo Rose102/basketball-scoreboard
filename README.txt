@@ -33,3 +33,5 @@ CATATAN:
 
 PENTING:
 Laptop tidak menampilkan controller. HP tidak perlu menampilkan scoreboard.
+
+Vercel deployment setup
