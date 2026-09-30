@@ -396,6 +396,15 @@ app.get("/controller", async (req, res) => {
 });
 
 
+app.get("/api/state", async (req, res) => {
+
+  const state = await getState();
+
+  res.json(state);
+
+});
+
+
 app.get("/api/health", (req, res) => {
 
   res.json({
