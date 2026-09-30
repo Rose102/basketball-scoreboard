@@ -936,7 +936,7 @@ function connect(){
     new WebSocket(
       proto +
       "://" +
-      location.host
+      location.host + "/api/ws"
     );
 
 
@@ -1087,3 +1087,6 @@ connect();
 </body>
 
 </html>
+
+
+
