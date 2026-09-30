@@ -1,23 +1,9 @@
 {
-  "version": 2,
-  "builds": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
     {
-      "src": "api/ws.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/ws.js"
-    },
-    {
-      "src": "/controller",
-      "dest": "/public/controller.html"
-    },
-    {
-      "src": "/",
-      "dest": "/public/scoreboard.html"
+      "source": "/controller",
+      "destination": "/controller.html"
     }
   ]
 }
